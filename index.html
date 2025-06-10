@@ -104,6 +104,15 @@
   </style>
 </head>
 <body>
+
+  <!-- 🔒 Login Check -->
+  <script>
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (!isLoggedIn || isLoggedIn !== 'true') {
+      window.location.href = 'login.html';
+    }
+  </script>
+
   <h1>🎉 EventEase Dashboard</h1>
 
   <!-- Profile icon -->
@@ -231,7 +240,6 @@
       profileTicketsDiv.innerHTML = "";
 
       tickets.forEach(t => {
-        // Skip invalid tickets
         if (!t.event || !t.date || !t.venue || !t.bookingId || !t.name || !t.phone) return;
 
         const div = document.createElement("div");
@@ -269,17 +277,11 @@
     logoutBtn.addEventListener("click", () => {
       if (confirm("Are you sure you want to logout?")) {
         localStorage.removeItem("userProfile");
-        localStorage.removeItem("booking");
+        localStorage.removeItem("bookedEvents");
+        localStorage.removeItem("isLoggedIn"); // 🔑 Clear login
         window.location.href = "login.html";
       }
     });
-
-    window.onload = () => {
-      if (!localStorage.getItem("userProfile")) {
-        // Optional: Redirect to login
-        // window.location.href = "login.html";
-      }
-    };
   </script>
 </body>
 </html>
